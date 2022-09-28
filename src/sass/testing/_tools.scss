@@ -1,0 +1,12 @@
+@mixin test-1($clr: rgba(183, 205, 183, 0.52)) {
+  border: 2px dashed $clr;
+}
+@mixin test-2($clr: rgba(240, 184, 184, 0.52)) {
+  border: 2px dashed $clr;
+}
+@mixin test-3($clr: rgba(124, 156, 221, 0.52)) {
+  border: 2px dashed $clr;
+}
+@mixin test-4($clr: rgba(215, 191, 237, 0.52)) {
+  border: 2px dashed $clr;
+}
