@@ -16,12 +16,13 @@ export default function Home() {
         </div>
       ) : (
         <div>
-          {tasks.map((task) => (
+          {tasks.map((task, index) => (
             <Card
               key={task.title}
               id={task.id}
               title={task.title}
-              description={task.description}></Card>
+              description={task.description}
+              index={index}></Card>
           ))}
         </div>
       )}

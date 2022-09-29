@@ -1,7 +1,8 @@
 import Layout from '../components/Layout'
 import { AiOutlineSave } from 'react-icons/ai'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { DataTasks } from '../context/tasksContext'
+import { useRouter } from 'next/router'
 
 export default function New(props) {
   const [task, setTask] = useState({
@@ -9,7 +10,9 @@ export default function New(props) {
     description: '',
   })
 
-  const { createNewTask } = DataTasks()
+  const { createNewTask, updateTask, tasks } = DataTasks()
+
+  const { push, query } = useRouter()
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -18,22 +21,36 @@ export default function New(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    createNewTask(task.title, task.description)
-    console.log(task)
+
+    if (!query.id) {
+      createNewTask(task.title, task.description)
+    } else {
+      updateTask(query.id, task)
+    }
   }
+
+  useEffect(() => {
+    if (query.id) {
+      const taskFound = tasks.find((task) => task.id === query.id)
+      // setTask({ title: taskFound.title, description: taskFound.description })
+    }
+  }, [])
 
   return (
     <Layout>
       <form
         className="flex flex-col gap-5 w-screen px-4 py-8"
         onSubmit={handleSubmit}>
-        <label className="text-3xl text-blue-200">Add your task</label>
+        <h1 className="text-3xl text-blue-200">
+          {query.id ? 'Update Task' : 'Add your task'}
+        </h1>
         <input
           className="px-4 py-3 rounded-md focus:text-gray-500 focus:outline-none bg-gray-800 border border-gray-700"
           type="text"
           placeholder="Write a title"
           name="title"
           onChange={handleChange}
+          value={task.title}
         />
         <textarea
           className="px-4 py-3 rounded-md focus:text-gray-500 focus:outline-none border border-gray-700 bg-gray-800"
@@ -41,6 +58,7 @@ export default function New(props) {
           placeholder="Write a description"
           name="description"
           onChange={handleChange}
+          value={task.description}
         />
 
         <button

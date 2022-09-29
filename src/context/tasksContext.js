@@ -16,10 +16,16 @@ export const TaskProvider = ({ children }) => {
     push('/')
   }
 
-  const removeTask = (id) => {}
+  const updateTask = (id, updateTask) => {
+    setTasks([
+      ...tasks.map((task) =>
+        task.id === id ? { ...task, ...updateTask } : task
+      ),
+    ])
+  }
 
   return (
-    <TaskContext.Provider value={{ tasks, createNewTask }}>
+    <TaskContext.Provider value={{ tasks, createNewTask, updateTask }}>
       {children}
     </TaskContext.Provider>
   )

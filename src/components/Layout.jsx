@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { DataTasks } from '../context/tasksContext'
 
 const Layout = ({ children }) => {
-  const router = useRouter()
+  const { push } = useRouter()
 
   const { tasks } = DataTasks()
 
@@ -29,7 +29,7 @@ const Layout = ({ children }) => {
         <div>
           <button
             className="inline-flex items-center gap-4 bg-blue-800 px-5 py-3 rounded-md uppercase font-bold text-blue-50 hover:bg-blue-400 transition-all"
-            onClick={() => router.push('/new')}>
+            onClick={() => push('/new')}>
             Add Task
             <BsPlusSquare></BsPlusSquare>
           </button>
